@@ -5,27 +5,26 @@ from tkinter import ttk
 
 #-----["Functions"]-----#
 def name_filter_system () :
-    
-    filtered_name = ''
-    user_name = name_entry . get ()
+
+    filtered_name , user_name  = '', name_entry . get ()
 
     match user_name :
 
-        case '' if user_name == '' : print ( 'Field cannot be empty.\nPlease try again.' )
+        case '' : print ( 'Field cannot be empty.\nPlease try again.' )
 
-        case _ if re . search ( r'\d' , user_name ) :
+        case user_name if re . search ( r'[a-zA-Z]' , user_name ) :
             for i in user_name :
-                if i . isdigit () :
-                    continue
-                filtered_name += i
+                if i == ' ' : filtered_name += i
+                elif i . isalpha () == False : continue
+                filtered_name += i  
             if filtered_name == '' : print ( 'Please insert a proper name.' )
-            else : print ( filtered_name )
-
-        case _ if len ( user_name ) > 25 or len ( user_name ) == 1 :
-            if len ( user_name ) > 25 : print ( 'Username exceeds the 25 character limit.\nPlease try again.' )
-            else : print ( 'Username must contain at least 2 characers.\nPlease try again.' )
+            else :
+                if len ( filtered_name ) > 25 : print ( 'Name exceeds the 25 character limit.\nPlease try again.' )
+                elif len ( filtered_name ) < 2 : print ( 'Name must contain 2 characters.\nPlease try again.' )
+                else: print ( filtered_name . title () )
         
-        case str if user_name == str : print ( user_name )
+        case _ : print ( 'Error.\nPlease try again.' )
+        
 
 #-----["Creating A GUI"]-----#
 window = tk . Tk ()
